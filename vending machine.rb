@@ -8,7 +8,8 @@ class VendingMachine
 
   # （自動販売機に投入された金額をインスタンス変数の @slot_money に代入する）
   def initialize
-    # 最初の自動販売機に入っている金額は0円
+    # 最初の自動販売機に入っている金額は0円 
+    # 二重配列になっている　[ [] ]  [水5,コーラ5,レッドブル5]  　　[価格100,水][価格120,コーラ][価格200,レッドブル]
     @slot_money = 0
     @sales_amount = 0
     @juices= [[{price:100,name:"水"},
