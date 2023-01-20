@@ -3,7 +3,7 @@ class VendingMachine
   # ステップ０ お金の投入と払い戻しの例コード
   # ステップ１ 扱えないお金の例コード
 
-  # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。
+  # 10円玉、50円玉、100円玉、500円玉、1000円札を１つずつ投入できる。 #MONEY = ・・・　定数
   MONEY = [10, 50, 100, 500, 1000].freeze
 
   # （自動販売機に投入された金額をインスタンス変数の @slot_money に代入する）
@@ -12,22 +12,22 @@ class VendingMachine
     # 二重配列になっている　[ [] ]  [水5,コーラ5,レッドブル5]  　　[価格100,水][価格120,コーラ][価格200,レッドブル]
     @slot_money = 0
     @sales_amount = 0
-    @juices= [[{price:100,name:"水"},
-              {price:100,name:"水"},
-              {price:100,name:"水"},
-              {price:100,name:"水"},
-              {price:100,name:"水"}],
-              [{price:120,name:"コーラ"},
-              {price:120,name:"コーラ"},
-              {price:120,name:"コーラ"},
-              {price:120,name:"コーラ"},
-              {price:120,name:"コーラ"}],
-              [{price:200,name:"レッドブル"},
-              {price:200,name:"レッドブル"},
-              {price:200,name:"レッドブル"},
-              {price:200,name:"レッドブル"},
-              {price:200,name:"レッドブル"}],
-            ]
+    # juices= [[{price:100,name:"水"},
+    #           {price:100,name:"水"},
+    #           {price:100,name:"水"},
+    #           {price:100,name:"水"},
+    #           {price:100,name:"水"}],
+    #           [{price:120,name:"コーラ"},
+    #           {price:120,name:"コーラ"},
+    #           {price:120,name:"コーラ"},
+    #           {price:120,name:"コーラ"},
+    #           {price:120,name:"コーラ"}],
+    #           [{price:200,name:"レッドブル"},
+    #           {price:200,name:"レッドブル"},
+    #           {price:200,name:"レッドブル"},
+    #           {price:200,name:"レッドブル"},
+    #           {price:200,name:"レッドブル"}],
+    #         ]
   end
 
   # 投入金額の総計を取得できる。
@@ -54,64 +54,64 @@ class VendingMachine
     @slot_money = 0
   end
 
-  def infomation
-    @juices.each do|juice|
+  def infomation(juices)
+    juices.each do|juice|
       puts juice
     end
-      puts "水の在庫は：#{@juices[0].count}個です"
-      puts "コーラの在庫は：#{@juices[1].count}個です"
-      puts "レッドブルの在庫は：#{@juices[2].count}個です"
+      puts "水の在庫は：#{juices[0].count}個です"
+      puts "コーラの在庫は：#{juices[1].count}個です"
+      puts "レッドブルの在庫は：#{juices[2].count}個です"
   end
 
-  def purchase
+  def purchase(juices)
     if @slot_money >= 200 
-      puts "水の在庫は：#{@juices[0].count}個です"
-      puts "コーラの在庫は：#{@juices[1].count}個です"
-      puts "レッドブルの在庫は：#{@juices[2].count}個です"
+      puts "水の在庫は：#{juices[0].count}個です"
+      puts "コーラの在庫は：#{juices[1].count}個です"
+      puts "レッドブルの在庫は：#{juices[2].count}個です"
       puts"数字を入力してください。0は水、1はコーラ、2はレッドブルです。"
       select=gets.to_i
       case select
       when 0
-        @juices[0].shift()
+        juices[0].shift()
         @sales_amount+=100
         @slot_money-=100
         puts "売上は#{@sales_amount}円です"
         puts "残高は#{@slot_money}円です"
       when 1
-        @juices[1].shift()
+        juices[1].shift()
         @sales_amount+=120
         @slot_money-=120
         puts "売上は#{@sales_amount}円です"
         puts "残高は#{@slot_money}円です"
       when 2
-        @juices[2].shift()
+        juices[2].shift()
         @sales_amount+=200
         @slot_money-=200
         puts "売上は#{@sales_amount}円です"
         puts "残高は#{@slot_money}円です"  
       end
     elsif @slot_money >= 120 && @slot_money <200  
-        puts "水の在庫は：#{@juices[0].count}個です"
-        puts "コーラの在庫は：#{@juices[1].count}個です"
+        puts "水の在庫は：#{juices[0].count}個です"
+        puts "コーラの在庫は：#{juices[1].count}個です"
         puts"数字を入力してください。0は水、1はコーラです。"
         select=gets.to_i
         case select
         when 0
-          @juices[0].shift()
+          juices[0].shift()
           @sales_amount+=100
           @slot_money-=100
           puts "売上は#{@sales_amount}円です"
           puts "残高は#{@slot_money}円です"
         when 1
-          @juices[1].shift()
+          juices[1].shift()
           @sales_amount+=120
           @slot_money-=120
           puts "売上は#{@sales_amount}円です"
           puts "残高は#{@slot_money}円です"
         end
     elsif @slot_money >= 100 && @slot_money <120  
-        puts "水の在庫は：#{@juices[0].count}個です"
-        @juices[0].shift()
+        puts "水の在庫は：#{juices[0].count}個です"
+        juices[0].shift()
         @sales_amount+=100
         @slot_money-=100
         puts "売上は#{@sales_amount}円です"
@@ -121,4 +121,33 @@ class VendingMachine
         puts "残高は#{@slot_money}円です"
     end
   end
+end
+
+
+
+class Drinks#DRINKnisuru
+  attr_reader :juices
+  def initialize
+      # 最初の自動販売機に入っている金額は0円 
+      # 二重配列になっている　[ [] ]  [水5,コーラ5,レッドブル5]  　　[価格100,水][価格120,コーラ][価格200,レッドブル]
+      @juices= [[{price:100,name:"水"},
+                {price:100,name:"水"},
+                {price:100,name:"水"},
+                {price:100,name:"水"},
+                {price:100,name:"水"}],
+                [{price:120,name:"コーラ"},
+                {price:120,name:"コーラ"},
+                {price:120,name:"コーラ"},
+                {price:120,name:"コーラ"},
+                {price:120,name:"コーラ"}],
+                [{price:200,name:"レッドブル"},
+                {price:200,name:"レッドブル"},
+                {price:200,name:"レッドブル"},
+                {price:200,name:"レッドブル"},
+                {price:200,name:"レッドブル"}],
+              ]
+  end
+  # def juices
+  #   @juices
+  # end
 end
